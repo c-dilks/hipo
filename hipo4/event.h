@@ -71,7 +71,7 @@ namespace hipo {
 
         void   show();
         void   init(std::vector<char> &buffer);
-        void   init(const char *buffer, int size);
+        void   init(const char *buffer, decltype(dataBuffer)::size_type size);
         void   getStructure(hipo::structure &str, int group, int item);
         void   getStructure4(hipo::structure &str, int group, int item);
         

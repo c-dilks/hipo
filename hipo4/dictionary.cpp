@@ -15,7 +15,7 @@ namespace hipo {
     std::vector<std::string>  entry;
     hipo::utils::tokenize(schString, entries, ",");
     int offset = 0;
-    for(int i = 0; i < entries.size(); i++){
+    for(decltype(entries)::size_type i = 0; i < entries.size(); i++){
       entry.clear();
       hipo::utils::tokenize(entries[i],entry, "/");
       schemaEntry_t e;
@@ -84,7 +84,7 @@ namespace hipo {
     std::string result;
     snprintf(parts,256,"{%s/%d/%d}{",schemaName.c_str(),groupid,itemid);
     result.append(parts);
-    for(int loop = 0; loop < schemaEntries.size(); loop++){
+    for(decltype(schemaEntries)::size_type loop = 0; loop < schemaEntries.size(); loop++){
       snprintf(parts,256,"%s/%s",schemaEntries[loop].name.c_str(), schemaEntries[loop].type.c_str());
       if(loop!=0) result.append(",");
       result.append(parts);
@@ -100,7 +100,7 @@ namespace hipo {
                schemaName.c_str(),groupid,itemid);
     result.append(parts);
     result.append("\"entries\": [ ");
-    for(int loop = 0; loop < schemaEntries.size(); loop++){
+    for(decltype(schemaEntries)::size_type loop = 0; loop < schemaEntries.size(); loop++){
       snprintf(parts,256,"{\"name\":\"%s\", \"type\":\"%s\", \"info\":\" \"}",
        schemaEntries[loop].name.c_str(), schemaEntries[loop].type.c_str());
       if(loop!=0) result.append(",");

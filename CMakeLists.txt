@@ -24,6 +24,9 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
             "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
+# error on warnings
+add_compile_options(-Wall)
+
 #if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
 #    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib )
 #endif()

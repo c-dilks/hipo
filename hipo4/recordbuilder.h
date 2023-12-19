@@ -52,7 +52,7 @@ namespace hipo {
         recordbuilder();
         virtual ~recordbuilder(){};
 
-        bool addEvent(std::vector<char> &vec, int start, int length);
+        bool addEvent(std::vector<char> &vec, std::vector<char>::size_type start, std::vector<char>::size_type length);
         bool addEvent(hipo::event &evnt);
 
         long getUserWordOne();

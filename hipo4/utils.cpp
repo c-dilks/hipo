@@ -55,7 +55,6 @@ namespace hipo {
   */
   std::string utils::substring(const std::string &str,
          const char *start_delim, const char *end_delim, int order){
-          int position = 0;
           int firstPos = hipo::utils::findposition(str,start_delim,order);
           if(firstPos<0) return std::string();
           std::string::size_type lastPos = str.find_first_of(end_delim,firstPos+1);

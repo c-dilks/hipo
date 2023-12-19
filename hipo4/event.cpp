@@ -233,7 +233,7 @@ void event::get(hipo::node &_n, int group, int item){
       while(position+8<eventSize){
           uint16_t   gid = *(reinterpret_cast<const uint16_t*> (&buffer[position  ]));
           uint8_t    iid = *(reinterpret_cast<const uint8_t*>  (&buffer[position+2]));
-          uint8_t   type = *(reinterpret_cast<const uint8_t*>  (&buffer[position+3]));
+          // uint8_t   type = *(reinterpret_cast<const uint8_t*>  (&buffer[position+3]));
           int     length = *(reinterpret_cast<const int*>      (&buffer[position+4]));
           //printf("group = %4d , item = %4d\n",(unsigned int) gid, (unsigned int) iid);
           if(gid==group&&iid==item) return std::make_pair(position,length);
@@ -248,7 +248,7 @@ void event::get(hipo::node &_n, int group, int item){
       while(position+8<eventSize){
           uint16_t   gid = *(reinterpret_cast<uint16_t*>(&dataBuffer[position]));
           uint8_t    iid = *(reinterpret_cast<uint8_t*>(&dataBuffer[position+2]));
-          uint8_t   type = *(reinterpret_cast<uint8_t*>(&dataBuffer[position+3]));
+          // uint8_t   type = *(reinterpret_cast<uint8_t*>(&dataBuffer[position+3]));
           int       word = *(reinterpret_cast<int*>(&dataBuffer[position+4]));
           //printf("group = %4d , item = %4d\n",(unsigned int) gid, (unsigned int) iid);
           int length = word&0x00FFFFFF;
@@ -264,7 +264,7 @@ void event::get(hipo::node &_n, int group, int item){
       while(position+8<eventSize){
           uint16_t   gid = *(reinterpret_cast<uint16_t*>(&dataBuffer[position]));
           uint8_t    iid = *(reinterpret_cast<uint8_t*>(&dataBuffer[position+2]));
-          uint8_t   type = *(reinterpret_cast<uint8_t*>(&dataBuffer[position+3]));
+          // uint8_t   type = *(reinterpret_cast<uint8_t*>(&dataBuffer[position+3]));
           int     length = *(reinterpret_cast<int*>(&dataBuffer[position+4]));
           //printf("group = %4d , item = %4d\n",(unsigned int) gid, (unsigned int) iid);
           if(gid==group&&iid==item) return std::make_pair(position,length);
@@ -288,7 +288,7 @@ void event::get(hipo::node &_n, int group, int item){
       return std::make_pair(-1,0);
     }
 */
-    void event::init(const char *buffer, int size){
+    void event::init(const char *buffer, decltype(dataBuffer)::size_type size){
        if(dataBuffer.size()<=size){
          dataBuffer.resize(size+1024);
        }

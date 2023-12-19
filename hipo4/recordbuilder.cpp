@@ -48,7 +48,7 @@ namespace hipo {
    * offset in the buffer and number of bytes to add provided
    * by user.
    */
-  bool recordbuilder::addEvent(std::vector<char> &vec, int start, int length){
+  bool recordbuilder::addEvent(std::vector<char> &vec, std::vector<char>::size_type start, std::vector<char>::size_type length){
       if((bufferEventsPosition+length)>=bufferEvents.size()) return false;
       if((bufferIndexEntries+1)*4>=bufferIndex.size()) return false;
       *reinterpret_cast<int*>(&bufferIndex[bufferIndexEntries*4]) = length;

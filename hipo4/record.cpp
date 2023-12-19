@@ -63,7 +63,7 @@ namespace hipo {
         recordHeader.headerLength     = *(reinterpret_cast<int *>(&recordHeaderBuffer[ 8]));
         recordHeader.numberOfEvents   = *(reinterpret_cast<int *>(&recordHeaderBuffer[12]));
         recordHeader.bitInfo          = *(reinterpret_cast<int *>(&recordHeaderBuffer[20]));
-        recordHeader.signatureString  = *(reinterpret_cast<int *>(&recordHeaderBuffer[28]));
+        recordHeader.signatureString  = *(reinterpret_cast<unsigned int *>(&recordHeaderBuffer[28]));
         recordHeader.recordDataLength = *(reinterpret_cast<int *>(&recordHeaderBuffer[32]));
         recordHeader.userHeaderLength = *(reinterpret_cast<int *>(&recordHeaderBuffer[24]));
         int compressedWord            = *(reinterpret_cast<int *>(&recordHeaderBuffer[36]));
