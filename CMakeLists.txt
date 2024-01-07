@@ -54,9 +54,8 @@ endif(APPLE)
 #
 # Dependencies
 #
-# add path containing CMake macros for this project
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-find_package(LZ4 QUIET CONFIG PATHS ${PROJECT_SOURCE_DIR}/cmake )
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LZ4 REQUIRED IMPORTED_TARGET liblz4)
 
 if(NOT LZ4_FOUND)
     message(STATUS "**LZ4********************************************************************")
@@ -67,18 +66,20 @@ if(NOT LZ4_FOUND)
     message(STATUS "* git submodule update                                                  *")
     message(STATUS "*************************************************************************")
     message("PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
+    ### list(APPEND CMAKE_PREFIX_PATH ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig)  # FIXME maybe needed for PKG_CONFIG_PATH
     file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX}/include/hipo4)
-    add_custom_target(LZ4 ALL
-                      WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/lz4/lib
-                      COMMAND make PREFIX=${CMAKE_INSTALL_PREFIX} CFLAGS="-fPIC" install
-                      )
-
-    set(LZ4_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include)
-    set(LZ4_LIBRARIES  ${CMAKE_INSTALL_PREFIX}/lib/liblz4.a)
+    execute_process( ### FIXME: add_custom_target? or add_custom_command?
+      WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/lz4/lib
+      COMMAND make PREFIX=${CMAKE_INSTALL_PREFIX} CFLAGS="-fPIC" install
+      ) ### FIXME: not being executed before the next line (it's concurrent)
+    pkg_check_modules(LZ4 REQUIRED IMPORTED_TARGET liblz4)
+    if(NOT LZ4_FOUND)
+      message(FATAL_ERROR "Failed to build LZ4 locally, or failed to find its pkg-config file")
+    endif()
 endif()
 
 add_compile_definitions(__LZ4__)
-include_directories(${LZ4_INCLUDE_DIRS})
+include_directories(PkgConfig::LZ4)
 
 set(DATAFRAME_IN_MAIN TRUE)
 add_subdirectory(extensions/dataframes)
@@ -129,7 +130,7 @@ set_target_properties(hipo4_static PROPERTIES OUTPUT_NAME hipo4)   # So that the
 
 # Required on Unix OS family to be able to be linked into shared libraries.
 set_target_properties(hipo4_objs PROPERTIES POSITION_INDEPENDENT_CODE ON)
-add_dependencies(hipo4_objs LZ4)
+add_dependencies(hipo4_objs PkgConfig::LZ4)
 
 # Include the macros for creating export package.
 include(CMakePackageConfigHelpers)
@@ -144,8 +145,8 @@ target_include_directories(hipo4 PUBLIC
                            $<INSTALL_INTERFACE:include/hipo4>
                            )
 
-target_link_libraries(hipo4 PUBLIC  ${LZ4_LIBRARIES} )
-target_link_libraries(hipo4_static PUBLIC ${LZ4_LIBRARIES})
+target_link_libraries(hipo4 PUBLIC  PkgConfig::LZ4)
+target_link_libraries(hipo4_static PUBLIC PkgConfig::LZ4)
 
 install(TARGETS hipo4
         EXPORT hipo4-export
@@ -162,9 +163,6 @@ install(FILES ${HIPO_HEADERS}
 
 install(EXPORT hipo4-export
         FILE hipo4Targets.cmake
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/hipo4)
-
-install(FILES cmake/LZ4Config.cmake
         DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/hipo4)
 
 export(TARGETS hipo4
