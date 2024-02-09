@@ -24,6 +24,8 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
+      - run: cmake --version
+      - run: pkg-config --version
       - name: build
         run: |
           cmake -S . -B build -DCMAKE_INSTALL_PREFIX=install
