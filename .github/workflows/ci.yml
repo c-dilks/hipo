@@ -26,6 +26,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: cmake --version
       - run: pkg-config --version
+      - run: brew install lz4
       - name: build
         run: |
           cmake -S . -B build -DCMAKE_INSTALL_PREFIX=install
