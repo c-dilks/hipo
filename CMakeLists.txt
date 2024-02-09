@@ -141,7 +141,7 @@ target_include_directories(hipo4 PUBLIC
                            $<INSTALL_INTERFACE:include/hipo4>
                            )
 
-target_link_libraries(hipo4 PUBLIC  PkgConfig::LZ4)
+target_link_libraries(hipo4 PUBLIC PkgConfig::LZ4)
 target_link_libraries(hipo4_static PUBLIC PkgConfig::LZ4)
 
 install(TARGETS hipo4

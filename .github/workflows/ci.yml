@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: build
         run: |
-          cmake -S . -B build -DCMAKE_INSTALL_PREFIX=install -LAH
+          cmake -S . -B build -DCMAKE_INSTALL_PREFIX=install
           cmake --build build -j2
           cmake --install build
       - run: brew install tree
