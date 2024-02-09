@@ -139,6 +139,7 @@ target_include_directories(hipo4 PUBLIC
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/hipo4>
                            $<INSTALL_INTERFACE:include>
                            $<INSTALL_INTERFACE:include/hipo4>
+                           PkgConfig::LZ4
                            )
 
 target_link_libraries(hipo4 PUBLIC  ${LZ4_LIBRARIES} )
