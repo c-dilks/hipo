@@ -75,7 +75,7 @@ if(NOT LZ4_FOUND)
 endif()
 
 add_compile_definitions(__LZ4__)
-include_directories(${LZ4_INCLUDE_DIRS})
+include_directories(PkgConfig::LZ4)
 
 set(DATAFRAME_IN_MAIN TRUE)
 add_subdirectory(extensions/dataframes)
@@ -139,17 +139,10 @@ target_include_directories(hipo4 PUBLIC
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/hipo4>
                            $<INSTALL_INTERFACE:include>
                            $<INSTALL_INTERFACE:include/hipo4>
-                           ${LZ4_INCLUDE_DIRS}
-                           )
-target_include_directories(hipo4_static PUBLIC
-                           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/hipo4>
-                           $<INSTALL_INTERFACE:include>
-                           $<INSTALL_INTERFACE:include/hipo4>
-                           ${LZ4_INCLUDE_DIRS}
                            )
 
-target_link_libraries(hipo4 PUBLIC  ${LZ4_LIBRARIES} )
-target_link_libraries(hipo4_static PUBLIC ${LZ4_LIBRARIES})
+target_link_libraries(hipo4 PUBLIC  PkgConfig::LZ4)
+target_link_libraries(hipo4_static PUBLIC PkgConfig::LZ4)
 
 install(TARGETS hipo4
         EXPORT hipo4-export
