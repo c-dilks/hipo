@@ -50,10 +50,6 @@ namespace hipo {
     putStringAt(0,str);
   }
 
-  structure::~structure(){
-    structureBuffer.clear(); // fix indirect leak from address sanitizer
-  }
-
   bool structure::allocate(int size){
       if(structureBuffer.size()<size){
         structureBuffer.resize(size+32);
